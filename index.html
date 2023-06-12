@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/reset.css" />
+    <link rel="stylesheet" href="style/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+    <title>Découverte des pays</title>
+  </head>
+  <body>
+    <h1>À LA DÉCOUVERTE DES PAYS</h1>
+    <div class="main">
+      <div class="resultats">
+        <div class="searchPays">
+          <h3>Effectuer une recherche par nom du pays</h3>
+          <div>
+            <input type="text" id="recherche" placeholder="Nom du pays" />
+            <button type="button" onclick="getValue('recherche')" id="chercher">
+              Chercher
+            </button>
+            <button type="button" onclick="removeValue()" id="remove">
+              Effacer
+            </button>
+          </div>
+          <p id="error"></p>
+        </div>
+        <div class="searchRegion">
+          <h3>Effectuer une recherche par continent cliquez :</h3>
+          <button id="regionSearch" type="button">ICI</button>
+        </div>
+        <div id="pays">
+          <div id="nom">
+            <p>Nom du pays</p>
+          </div>
+          <div id="capital">
+            <p>Capital</p>
+          </div>
+          <div id="population">
+            <p>Population</p>
+          </div>
+          <div id="surface">
+            <p>Taille</p>
+          </div>
+          <div id="region">
+            <p>Continent</p>
+          </div>
+          <div id="drapeau">
+            <p></p>
+          </div>
+        </div>
+      </div>
+      <div class="plan">
+        <div id="map"></div>
+      </div>
+    </div>
+    <div id="overlay">
+      <div class="region">
+        <button id="close" type="button">X</button>
+        <h2>Trouvez un pays par son continent</h2>
+        <div class="selection">
+          <label for="region">Choisir un Continent</label>
+          <select
+            name="region"
+            id="regionSelect"
+            onchange="getCountries(regionSelect.value)"
+          >
+            <option value="">-- Choisir une option --</option>
+            <option value="Africa">Afrique</option>
+            <option value="Americas">Amériques</option>
+            <option value="Antarctic">Antarctique</option>
+            <option value="Asia">Asie</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Océanie</option>
+          </select>
+        </div>
+        <div id="geographie"></div>
+        <ul id="countries"></ul>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
