@@ -1,4 +1,6 @@
 const URL_ = "https://restcountries.com/v3.1/translation/";
+
+const main = document.getElementById("main");
 const city = document.getElementById("nom");
 const capital = document.getElementById("capital");
 const drapeau = document.getElementById("drapeau");
@@ -68,6 +70,7 @@ async function getInfo(pays) {
 
       if (overlay.getAttribute("id", "overlay active")) {
         overlay.setAttribute("id", "overlay");
+        main.removeAttribute("style");
       }
     })
     //Notifier si nous avons une erreur
@@ -292,8 +295,10 @@ function removeElement(query) {
 //! EVENT LISTENER
 btnRegion.addEventListener("click", () => {
   overlay.setAttribute("id", "overlay active");
+  main.setAttribute("style", "display: none");
 });
 
 closed.addEventListener("click", () => {
   overlay.setAttribute("id", "overlay");
+  main.removeAttribute("style");
 });

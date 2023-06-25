@@ -21,18 +21,24 @@
   </head>
   <body>
     <h1>À LA DÉCOUVERTE DES PAYS</h1>
-    <div class="main">
+    <div id="main">
       <div class="resultats">
         <div class="searchPays">
           <h3>Effectuer une recherche par nom du pays</h3>
           <div>
             <input type="text" id="recherche" placeholder="Nom du pays" />
-            <button type="button" onclick="getValue('recherche')" id="chercher">
-              Chercher
-            </button>
-            <button type="button" onclick="removeValue()" id="remove">
-              Effacer
-            </button>
+            <div id="btn-container">
+              <button
+                type="button"
+                onclick="getValue('recherche')"
+                id="chercher"
+              >
+                Chercher
+              </button>
+              <button type="button" onclick="removeValue()" id="remove">
+                Effacer
+              </button>
+            </div>
           </div>
           <p id="error"></p>
         </div>

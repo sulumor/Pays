@@ -1,4 +1,4 @@
-.main {
+#main {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -49,6 +49,7 @@ button {
 
 .searchPays input {
   min-width: 20vw;
+  width: 45%;
   height: 2.5rem;
   padding-inline-start: 1rem;
   font-size: 1rem;
@@ -70,6 +71,10 @@ button {
   height: 100%;
 }
 
+.plan {
+  max-height: 550px;
+}
+
 #pays {
   display: none;
   margin-top: 1rem;
@@ -83,8 +88,14 @@ button {
   margin-top: 0.55rem;
 }
 
+#pays #drapeau {
+  justify-content: center;
+  height: 25vh;
+}
+
 #insert-0 {
   border: black solid 1px;
+  height: 100%;
   max-height: 40vh;
 }
 
@@ -106,6 +117,7 @@ div[id*="active"] {
   position: absolute;
   top: 0;
   right: 0;
+  overflow: hidden;
 }
 
 .region {
@@ -169,9 +181,103 @@ ul button {
   overflow: hidden;
   text-overflow: ellipsis;
   border: 1px solid black;
+  color: black;
   padding: 5px 10px;
   margin: 3px 5px;
   max-width: 150px;
   height: 25px;
   justify-content: start;
+}
+
+@media screen and (max-width: 1000px) {
+  #main {
+    flex-direction: column;
+    justify-content: center;
+    height: 90%;
+  }
+
+  .resultats {
+    width: 90%;
+    height: 90%;
+  }
+
+  .plan {
+    display: none;
+  }
+
+  ul button {
+    height: 15px;
+    font-size: 12px;
+    border: none;
+    background-color: white;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+    margin-top: 15px;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  .searchPays div {
+    flex-direction: column;
+  }
+
+  .searchPays input {
+    width: 100%;
+    height: 1.5rem;
+    padding-inline-start: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  #btn-container {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  button {
+    line-height: 1;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0.75rem;
+  }
+
+  #close {
+    right: 3vh;
+  }
+
+  #geographie {
+    display: none;
+  }
+
+  ul button {
+    height: 15px;
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .selection label {
+    font-size: 12px;
+  }
+
+  .selection select {
+    font-size: 12px;
+    width: 100px;
+  }
+
+  ul button {
+    height: 10px;
+    max-width: 120px;
+    font-size: 10px;
+  }
 }
