@@ -39,15 +39,15 @@ button {
   color: white;
 }
 
-.searchPays {
+.byCountry {
   margin: 20px 10px;
 }
 
-.searchPays div {
+.byCountry div {
   margin: 10px 5px;
 }
 
-.searchPays input {
+.byCountry input {
   min-width: 20vw;
   width: 45%;
   height: 2.5rem;
@@ -57,7 +57,7 @@ button {
   border: 1px solid #e2e8f0;
 }
 
-#chercher {
+#search {
   background-color: #319795;
 }
 
@@ -65,30 +65,30 @@ button {
   background-color: red;
 }
 
-.resultats,
-.plan {
+.left,
+.right {
   width: 45vw;
   height: 100%;
 }
 
-.plan {
+.right {
   max-height: 550px;
 }
 
-#pays {
+.result {
   display: none;
   margin-top: 1rem;
 }
 
-#pays div,
-.searchPays div {
+.result div,
+.byCountry div {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 0.55rem;
 }
 
-#pays #drapeau {
+.result #flag {
   justify-content: center;
   height: 25vh;
 }
@@ -155,7 +155,7 @@ div[id*="active"] {
   margin: 0 1rem;
 }
 
-#geographie {
+#regionInfos {
   max-height: 28vh;
   margin: 1rem 0;
   display: flex;
@@ -163,22 +163,23 @@ div[id*="active"] {
   align-items: center;
 }
 
-#geographie img {
+#regionInfos img {
   max-height: 27vh;
 }
 
-#geographie p {
+#regionInfos p {
   padding: 1rem;
 }
 
-ul {
+#countries {
   display: flex;
   flex-wrap: wrap;
 }
 
-ul button {
-  white-space: nowrap;
-  overflow: hidden;
+#countries button {
+  position: relative;
+  display: inline-block;
+  overflow: inherit;
   text-overflow: ellipsis;
   border: 1px solid black;
   color: black;
@@ -189,6 +190,38 @@ ul button {
   justify-content: start;
 }
 
+#countries button .tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#countries button .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+#countries button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
 @media screen and (max-width: 1000px) {
   #main {
     flex-direction: column;
@@ -196,12 +229,12 @@ ul button {
     height: 90%;
   }
 
-  .resultats {
+  .left {
     width: 90%;
     height: 90%;
   }
 
-  .plan {
+  .right {
     display: none;
   }
 
@@ -227,18 +260,18 @@ ul button {
     font-size: 1rem;
   }
 
-  .searchPays div {
+  .byCountry div {
     flex-direction: column;
   }
 
-  .searchPays input {
+  .byCountry input {
     width: 100%;
     height: 1.5rem;
     padding-inline-start: 0.75rem;
     font-size: 0.75rem;
   }
 
-  #btn-container {
+  .btn-container {
     flex-direction: row;
     width: 100%;
   }
@@ -255,28 +288,28 @@ ul button {
     right: 3vh;
   }
 
-  #geographie {
+  #regionInfos {
     display: none;
   }
 
   ul button {
     height: 15px;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 
 @media screen and (max-width: 400px) {
   .selection label {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .selection select {
-    font-size: 12px;
+    font-size: 15px;
     width: 100px;
   }
 
   ul button {
-    height: 10px;
+    height: 12px;
     max-width: 120px;
     font-size: 10px;
   }

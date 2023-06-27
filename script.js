@@ -1,19 +1,30 @@
 const URL_ = "https://restcountries.com/v3.1/translation/";
 
 const main = document.getElementById("main");
-const city = document.getElementById("nom");
+//Elements du pays
+const nameCountry = document.getElementById("name");
 const capital = document.getElementById("capital");
-const drapeau = document.getElementById("drapeau");
 const population = document.getElementById("population");
-const surface = document.getElementById("surface");
-const continent = document.getElementById("region");
-const erreur = document.getElementById("error");
+const area = document.getElementById("area");
+const region = document.getElementById("region");
+const flag = document.getElementById("flag");
+
+const error = document.getElementById("error");
 const countries = document.getElementById("countries");
-const btnRegion = document.getElementById("regionSearch");
 const overlay = document.getElementById("overlay");
+const regionInfos = document.getElementById("regionInfos");
+const result = document.querySelector(".result");
+const inputSearch = document.getElementById("countrySearch");
+
+//Boutons
 const closed = document.getElementById("close");
-const geo = document.getElementById("geographie");
-const _Pays = document.getElementById("pays");
+const btnRegion = document.getElementById("regionSearch");
+const select = document.querySelector("#regionSelect");
+const search = document.querySelector("#search");
+const remove = document.querySelector("#remove");
+
+//!Diviser la page JS + voir effacer barre de recherche suite a selection dans continent
+//! Voir mettre les event listener sur les boutons
 
 //Initialisation de la carte
 var map = L.map("map").setView([-1.747497404171405, -0.703125], 1);
@@ -38,7 +49,7 @@ async function getInfo(pays) {
     })
     .then((data) => {
       //Effacer si il y a une erreur pour une précédente requête
-      erreur.textContent = "";
+      error.textContent = "";
 
       //Trouver le pays correspondant exactement à la recherche si nous avons plusieurs réponses de l'API
       let donnees = [];
@@ -55,13 +66,13 @@ async function getInfo(pays) {
 
       //Boucler dans les données et ajouter ce dont nous avons besoins
       for (const pays of donnees) {
-        inserInfo(pays.translations.fra.common, city, 1);
+        inserInfo(pays.translations.fra.common, nameCountry, 1);
         inserInfo(pays.capital, capital, 2);
         inserInfo(separatorNum(pays.population, "hab."), population, 3);
-        inserInfo(separatorNum(pays.area, "km²"), surface, 4);
-        inserInfo(tradRegion(pays.region), continent, 5);
-        inserInfo(pays.flags, drapeau, 0);
-        _Pays.style.display = "block";
+        inserInfo(separatorNum(pays.area, "km²"), area, 4);
+        inserInfo(tradRegion(pays.region), region, 5);
+        inserInfo(pays.flags, flag, 0);
+        result.style.display = "block";
 
         // Mise à jour de la carte
         map.setView(pays.latlng, zoom(pays.area));
@@ -74,9 +85,9 @@ async function getInfo(pays) {
       }
     })
     //Notifier si nous avons une erreur
-    .catch((error) => {
-      console.log(error);
-      erreur.textContent =
+    .catch((err) => {
+      console.log(err);
+      error.textContent =
         "Veuillez vérifier que l'orthographe soit correcte, ne pas oublier les accents.";
     });
 }
@@ -85,7 +96,7 @@ async function getInfo(pays) {
 async function getCountries(region) {
   //Supprimer les requêtes précedentes et revenir comme au départ
   if (region === "") {
-    removeElement(geo);
+    removeElement(regionInfos);
     removeElement(countries);
   }
 
@@ -111,6 +122,7 @@ async function getCountries(region) {
       });
 
       inserRegion(region);
+
       for (const country of data) {
         let btn = document.createElement("button");
 
@@ -118,12 +130,23 @@ async function getCountries(region) {
         let nomPays = country.translations.fra.common.replace("'", `\u2019`);
 
         btn.textContent = nomPays;
-        btn.setAttribute("onclick", `getInfo('${nomPays}')`);
+        btn.setAttribute("type", "button");
+        btn.setAttribute("value", `${nomPays}`);
+        if (nomPays.length > 15) {
+          let span = document.createElement("span");
+          span.setAttribute("class", "tooltip");
+          span.textContent = nomPays;
+          btn.textContent = nomPays.slice(0, 12) + "...";
+          btn.append(span);
+        }
         countries.appendChild(btn);
+        btn.addEventListener("click", (e) => {
+          getInfo(e.target.value);
+        });
       }
     })
-    .catch((error) => {
-      console.log(error);
+    .catch((err) => {
+      console.log(err);
     });
 }
 
@@ -140,6 +163,7 @@ function inserInfo(data, query, index) {
     query.appendChild(p);
   }
 }
+
 //Insertion d'une image
 function inserImg(flag, query) {
   let img = document.createElement("img");
@@ -151,11 +175,11 @@ function inserImg(flag, query) {
 
 //Insertion des informations sur le continent
 function inserRegion(region) {
-  removeElement(geo);
+  removeElement(regionInfos);
   let img = document.createElement("img");
   img.src = `src/images/${region}.png`;
   img.id = `${region}`;
-  geo.append(img);
+  regionInfos.append(img);
   let p = document.createElement("p");
   switch (region) {
     case "Africa":
@@ -179,16 +203,7 @@ function inserRegion(region) {
     default:
       break;
   }
-  geo.append(p);
-}
-//Récupérer la donnée dans l'input pour la recherche API
-function getValue(idInput) {
-  getInfo(document.getElementById(idInput).value);
-}
-
-//Effacer la donnée dans l'input
-function removeValue() {
-  document.getElementById("recherche").value = "";
+  regionInfos.append(p);
 }
 
 //Traduire les continents
@@ -301,4 +316,20 @@ btnRegion.addEventListener("click", () => {
 closed.addEventListener("click", () => {
   overlay.setAttribute("id", "overlay");
   main.removeAttribute("style");
+});
+
+search.addEventListener("click", () => {
+  getInfo(inputSearch.value);
+});
+
+remove.addEventListener("click", () => {
+  inputSearch.value = "";
+});
+
+inputSearch.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") getInfo(e.target.value);
+});
+
+select.addEventListener("change", (e) => {
+  getCountries(e.target.value);
 });

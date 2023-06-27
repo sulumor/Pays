@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <link rel="stylesheet" href="style/reset.css" />
     <link rel="stylesheet" href="style/style.css" />
     <link
@@ -22,32 +25,31 @@
   <body>
     <h1>À LA DÉCOUVERTE DES PAYS</h1>
     <div id="main">
-      <div class="resultats">
-        <div class="searchPays">
-          <h3>Effectuer une recherche par nom du pays</h3>
-          <div>
-            <input type="text" id="recherche" placeholder="Nom du pays" />
-            <div id="btn-container">
-              <button
-                type="button"
-                onclick="getValue('recherche')"
-                id="chercher"
-              >
-                Chercher
-              </button>
-              <button type="button" onclick="removeValue()" id="remove">
-                Effacer
-              </button>
+      <div class="left">
+        <div class="search">
+          <div class="byCountry">
+            <h3>Effectuer une recherche par nom du pays</h3>
+            <div>
+              <input
+                type="text"
+                id="countrySearch"
+                placeholder="Nom du pays"
+                autocomplete="off"
+              />
+              <div class="btn-container">
+                <button type="button" id="search">Chercher</button>
+                <button type="button" id="remove">Effacer</button>
+              </div>
             </div>
+            <p id="error"></p>
           </div>
-          <p id="error"></p>
+          <div class="byRegion">
+            <h3>Effectuer une recherche par continent cliquez :</h3>
+            <button id="regionSearch" type="button">ICI</button>
+          </div>
         </div>
-        <div class="searchRegion">
-          <h3>Effectuer une recherche par continent cliquez :</h3>
-          <button id="regionSearch" type="button">ICI</button>
-        </div>
-        <div id="pays">
-          <div id="nom">
+        <div class="result">
+          <div id="name">
             <p>Nom du pays</p>
           </div>
           <div id="capital">
@@ -56,18 +58,18 @@
           <div id="population">
             <p>Population</p>
           </div>
-          <div id="surface">
+          <div id="area">
             <p>Taille</p>
           </div>
           <div id="region">
             <p>Continent</p>
           </div>
-          <div id="drapeau">
+          <div id="flag">
             <p></p>
           </div>
         </div>
       </div>
-      <div class="plan">
+      <div class="right">
         <div id="map"></div>
       </div>
     </div>
@@ -76,12 +78,8 @@
         <button id="close" type="button">X</button>
         <h2>Trouvez un pays par son continent</h2>
         <div class="selection">
-          <label for="region">Choisir un Continent</label>
-          <select
-            name="region"
-            id="regionSelect"
-            onchange="getCountries(regionSelect.value)"
-          >
+          <label for="regionSelect">Choisir un Continent</label>
+          <select name="region" id="regionSelect" autocomplete="off">
             <option value="">-- Choisir une option --</option>
             <option value="Africa">Afrique</option>
             <option value="Americas">Amériques</option>
@@ -91,7 +89,7 @@
             <option value="Oceania">Océanie</option>
           </select>
         </div>
-        <div id="geographie"></div>
+        <div id="regionInfos"></div>
         <ul id="countries"></ul>
       </div>
     </div>
